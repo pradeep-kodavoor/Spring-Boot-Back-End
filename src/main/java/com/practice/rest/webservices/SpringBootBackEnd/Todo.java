@@ -9,6 +9,10 @@ public class Todo {
 	private Date targetDate;
 	private Boolean isCompleted;
 
+	public Todo() {
+
+	}
+
 	public Todo(int id, String description, Date targetDate, Boolean isCompleted) {
 		super();
 		this.id = id;
@@ -47,6 +51,32 @@ public class Todo {
 
 	public void setIsCompleted(Boolean isCompleted) {
 		this.isCompleted = isCompleted;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + id;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Todo other = (Todo) obj;
+		if (id != other.id) {
+			return false;
+		}
+		return true;
 	}
 
 	@Override

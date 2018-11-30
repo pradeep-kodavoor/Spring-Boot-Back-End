@@ -1,6 +1,7 @@
 package com.practice.rest.webservices.SpringBootBackEnd;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -22,16 +23,17 @@ public class TodoService {
 	}
 
 	public List<Todo> findAll() {
+		Collections.sort(todos, (var1, var2) -> Integer.compare(var1.getId(), var2.getId()));
 		return todos;
 	}
 
-	public Todo deleteTodo(int id) {
-		Todo todo = findTodoById(id);
+	public Todo deleteById(int id) {
+		Todo todo = findById(id);
 		todos.remove(todo);
 		return todo;
 	}
 
-	public Todo findTodoById(int id) {
+	public Todo findById(int id) {
 		for (Todo todo : todos) {
 			if (todo.getId() == id) {
 				return todo;
@@ -40,9 +42,16 @@ public class TodoService {
 		return null;
 	}
 
-	public void updateTodo(Todo todo) {
-		deleteTodo(todo.getId());
+	public Todo update(Todo todo) {
+		deleteById(todo.getId());
 		todos.add(todo);
+		return todo;
+	}
+
+	public Todo save(Todo todo) {
+		todo.setId(++id);
+		todos.add(todo);
+		return todo;
 	}
 
 }
