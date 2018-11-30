@@ -1,4 +1,4 @@
-package com.practice.rest.webservices.SpringBootBackEnd;
+package com.practice.rest.webservices.SpringBootBackEnd.helloworld;
 
 public class HelloWorldBean {
 

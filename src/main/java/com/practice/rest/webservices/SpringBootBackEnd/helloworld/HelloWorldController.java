@@ -1,4 +1,4 @@
-package com.practice.rest.webservices.SpringBootBackEnd;
+package com.practice.rest.webservices.SpringBootBackEnd.helloworld;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
