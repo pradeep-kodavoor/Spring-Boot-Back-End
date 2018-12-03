@@ -23,13 +23,13 @@ public class TodoResource {
 	@Autowired
 	TodoService todoService;
 
-	@GetMapping("/todos")
+	@GetMapping("/users/{username}/todos")
 	public List<Todo> getTodos() {
 		System.out.println("Invoke getTodos");
 		return todoService.findAll();
 	}
 
-	@DeleteMapping("/todos/{id}")
+	@DeleteMapping("/users/{username}/todos/{id}")
 	public ResponseEntity<Void> deleteTodo(@PathVariable int id) {
 		System.out.println("Invoke deleteTodo");
 		Todo todo = todoService.deleteById(id);
@@ -42,13 +42,13 @@ public class TodoResource {
 		}
 	}
 
-	@GetMapping("/todos/{id}")
+	@GetMapping("/users/{username}/todos/{id}")
 	public Todo getTodosById(@PathVariable int id) {
 		System.out.println("Invoke getTodosById");
 		return todoService.findById(id);
 	}
 
-	@PutMapping("/todos/{id}")
+	@PutMapping("/users/{username}/todos/{id}")
 	public ResponseEntity<Todo> updateTodo(@PathVariable int id, @RequestBody Todo todo) {
 		System.out.println("Invoke updateTodo");
 		Todo updatedTodo = todoService.update(todo);
@@ -56,9 +56,9 @@ public class TodoResource {
 		return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
 	}
 
-	@PostMapping("/todos")
+	@PostMapping("/users/{username}/todos")
 	public ResponseEntity<Void> createTodo(@RequestBody Todo todo) {
-		System.out.println("Invoke updateTodo");
+		System.out.println("Invoke createTodo");
 		Todo createdTodo = todoService.save(todo);
 
 		// Ideal response for create request should be created resource location
