@@ -8,18 +8,15 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 
 @Configuration
 @EnableWebSecurity
-public class SpringBasicAuthConfiguration extends WebSecurityConfigurerAdapter {
+public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http
-			.csrf().disable()
-			.authorizeRequests()
-			.antMatchers(HttpMethod.OPTIONS, "/**").permitAll()
-			.anyRequest()
-			.authenticated().and()
-			// .formLogin().and()
-			.httpBasic();
+		System.out.println("Configur");
+		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest()
+				.authenticated().and()
+				// .formLogin().and()
+				.httpBasic();
 	}
 
 }

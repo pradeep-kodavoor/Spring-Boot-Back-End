@@ -33,6 +33,7 @@ public class HelloWorldController {
 
 	@GetMapping("/hello-world-bean/{name}")
 	public HelloWorldBean helloWorldBeanWithPathVariable(@PathVariable String name) {
+		System.out.println("Invoke Hello World!!");
 		return new HelloWorldBean("Hello " + name);
 	}
 
