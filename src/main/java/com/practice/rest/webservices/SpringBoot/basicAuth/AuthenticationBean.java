@@ -1,4 +1,4 @@
-package com.practice.rest.webservices.SpringBootBackEnd.basicAuth;
+package com.practice.rest.webservices.SpringBoot.basicAuth;
 
 public class AuthenticationBean {
 

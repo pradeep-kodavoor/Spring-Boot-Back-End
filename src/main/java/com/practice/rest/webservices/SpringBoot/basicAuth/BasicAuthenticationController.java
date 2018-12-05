@@ -1,4 +1,4 @@
-package com.practice.rest.webservices.SpringBootBackEnd.basicAuth;
+package com.practice.rest.webservices.SpringBoot.basicAuth;
 
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;

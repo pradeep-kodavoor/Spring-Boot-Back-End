@@ -1,4 +1,4 @@
-package com.practice.rest.webservices.SpringBootBackEnd.basicAuth;
+package com.practice.rest.webservices.SpringBoot.basicAuth;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
