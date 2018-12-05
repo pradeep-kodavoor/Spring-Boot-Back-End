@@ -12,9 +12,13 @@ public class BasicAuthConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		System.out.println("Configur");
-		http.csrf().disable().authorizeRequests().antMatchers(HttpMethod.OPTIONS, "/**").permitAll().anyRequest()
-				.authenticated().and()
+		System.out.println("Overridng Spring Security Configuration!!");
+		http
+			.csrf().disable() // Disable CSRF token
+			.authorizeRequests()
+				.antMatchers(HttpMethod.OPTIONS, "/**").permitAll() //Any Request with OPTIONS permit all
+				.anyRequest().authenticated() //Rest of the request authorise
+				.and()
 				// .formLogin().and()
 				.httpBasic();
 	}
