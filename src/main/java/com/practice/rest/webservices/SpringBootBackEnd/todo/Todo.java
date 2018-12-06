@@ -2,18 +2,34 @@ package com.practice.rest.webservices.SpringBootBackEnd.todo;
 
 import java.util.Date;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+
+@Entity
 public class Todo {
 
-	private int id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "TODO_SEQUENCE")
+	@SequenceGenerator(name = "TODO_SEQUENCE", allocationSize = 1)
+	private Long id;
+	private String username;
 	private String Description;
+
+	@Column(name = "TARGET_DATE")
 	private Date targetDate;
+
+	@Column(name = "IS_COMPLETED")
 	private Boolean isCompleted;
 
 	public Todo() {
 
 	}
 
-	public Todo(int id, String description, Date targetDate, Boolean isCompleted) {
+	public Todo(Long id, String description, Date targetDate, Boolean isCompleted) {
 		super();
 		this.id = id;
 		Description = description;
@@ -21,12 +37,20 @@ public class Todo {
 		this.isCompleted = isCompleted;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getDescription() {
@@ -57,7 +81,7 @@ public class Todo {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + id;
+		result = prime * result + (id == null ? 0 : id.hashCode());
 		return result;
 	}
 
@@ -73,7 +97,11 @@ public class Todo {
 			return false;
 		}
 		Todo other = (Todo) obj;
-		if (id != other.id) {
+		if (id == null) {
+			if (other.id != null) {
+				return false;
+			}
+		} else if (!id.equals(other.id)) {
 			return false;
 		}
 		return true;

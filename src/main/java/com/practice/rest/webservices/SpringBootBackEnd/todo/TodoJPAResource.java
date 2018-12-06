@@ -18,23 +18,35 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
-public class TodoResource {
+public class TodoJPAResource {
 
 	@Autowired
 	TodoService todoService;
 
-	@GetMapping("/users/{username}/todos")
-	public List<Todo> getTodos() {
+	@Autowired
+	TodoJPARepository todoJPARepository;
+
+	@GetMapping("/jpa/users/{username}/todos")
+	public List<Todo> getTodos(@PathVariable String username) {
 		System.out.println("Invoke getTodos");
-		return todoService.findAll();
+		return todoJPARepository.findByUsername(username);
 	}
 
-	@DeleteMapping("/users/{username}/todos/{id}")
+	@GetMapping("/jpa/users/{username}/todos/{id}")
+	public Todo getTodosById(@PathVariable Long id) {
+		System.out.println("Invoke getTodosById");
+		// FindById returns an Optional Object. Get() method has to be called to
+		// get the actual output
+		return todoJPARepository.findById(id).get();
+	}
+
+	@DeleteMapping("/jpa/users/{username}/todos/{id}")
 	public ResponseEntity<Void> deleteTodo(@PathVariable Long id) {
 		System.out.println("Invoke deleteTodo");
-		Todo todo = todoService.deleteById(id);
+		Todo todo = todoJPARepository.findById(id).get();
+		todoJPARepository.deleteById(id);
 
-		// For Sending status we need to ResponseEntity
+		// For Sending status we need to use ResponseEntity
 		if (todo != null) {
 			return ResponseEntity.noContent().build();
 		} else {
@@ -42,26 +54,21 @@ public class TodoResource {
 		}
 	}
 
-	@GetMapping("/users/{username}/todos/{id}")
-	public Todo getTodosById(@PathVariable Long id) {
-		System.out.println("Invoke getTodosById");
-		return todoService.findById(id);
-	}
-
-	@PutMapping("/users/{username}/todos/{id}")
+	@PutMapping("/jpa/users/{username}/todos/{id}")
 	public ResponseEntity<Todo> updateTodo(@PathVariable Long id, @RequestBody Todo todo) {
 		System.out.println("Invoke updateTodo");
-		Todo updatedTodo = todoService.update(todo);
+		Todo updatedTodo = todoJPARepository.save(todo);
 		return new ResponseEntity<>(updatedTodo, HttpStatus.OK);
 	}
 
-	@PostMapping("/users/{username}/todos")
-	public ResponseEntity<Void> createTodo(@RequestBody Todo todo) {
+	@PostMapping("/jpa/users/{username}/todos")
+	public ResponseEntity<Void> createTodo(@RequestBody Todo todo, @PathVariable String username) {
 		System.out.println("Invoke createTodo");
-		Todo createdTodo = todoService.save(todo);
+		todo.setUsername(username);
+		Todo createdTodo = todoJPARepository.save(todo);
 
 		// Ideal response for create request should be created resource location
-		// Hence getting the cuurent URI and appending id to it.
+		// Hence getting the curent URI and appending id to it.
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(createdTodo.getId())
 				.toUri();
 

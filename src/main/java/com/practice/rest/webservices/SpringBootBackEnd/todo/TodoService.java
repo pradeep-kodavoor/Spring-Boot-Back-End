@@ -12,7 +12,7 @@ public class TodoService {
 
 	static List<Todo> todos = new ArrayList<>();
 
-	static int id = 0;
+	static Long id = 0L;
 
 	static {
 		todos.add(new Todo(++id, "Learn Core JAVA", new Date(), false));
@@ -23,17 +23,17 @@ public class TodoService {
 	}
 
 	public List<Todo> findAll() {
-		Collections.sort(todos, (var1, var2) -> Integer.compare(var1.getId(), var2.getId()));
+		Collections.sort(todos, (var1, var2) -> Long.compare(var1.getId(), var2.getId()));
 		return todos;
 	}
 
-	public Todo deleteById(int id) {
+	public Todo deleteById(Long id) {
 		Todo todo = findById(id);
 		todos.remove(todo);
 		return todo;
 	}
 
-	public Todo findById(int id) {
+	public Todo findById(Long id) {
 		for (Todo todo : todos) {
 			if (todo.getId() == id) {
 				return todo;

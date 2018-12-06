@@ -1,0 +1,7 @@
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'pradeep','Learn Core JAVA',sysdate(),false)
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'pradeep','Learn J2EE',sysdate(),false)
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'pradeep','Learn Spring',sysdate(),false)
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'pradeep','Learn Hibernate',sysdate(),false)
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'jagath','Learn Perl',sysdate(),false)
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'jagath','Learn PHP',sysdate(),false)
+insert into todo (id,username,description,target_date,is_completed) values(TODO_SEQUENCE.nextval,'jagath','Learn Drupal',sysdate(),false)
