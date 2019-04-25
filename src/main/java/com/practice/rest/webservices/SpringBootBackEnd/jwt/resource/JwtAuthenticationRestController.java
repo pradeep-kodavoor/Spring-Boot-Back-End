@@ -4,6 +4,8 @@ import java.util.Objects;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -27,6 +29,8 @@ import com.practice.rest.webservices.SpringBootBackEnd.jwt.JwtUserDetails;
 @RestController
 @CrossOrigin(origins = "http://localhost:4200")
 public class JwtAuthenticationRestController {
+
+	Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@Value("${jwt.http.request.header}")
 	private String tokenHeader;
@@ -56,11 +60,12 @@ public class JwtAuthenticationRestController {
 
 	@RequestMapping(value = "${jwt.refresh.token.uri}", method = RequestMethod.GET)
 	public ResponseEntity<?> refreshAndGetAuthenticationToken(HttpServletRequest request) {
+		log.debug("Entering refreshAndGetAuthenticationToken method in JwtAuthenticationRestController controller..");
 		String authToken = request.getHeader(tokenHeader);
 		final String token = authToken.substring(7);
 		String username = jwtTokenUtil.getUsernameFromToken(token);
 		JwtUserDetails user = (JwtUserDetails) jwtInMemoryUserDetailsService.loadUserByUsername(username);
-
+		log.debug("User Details present in the token: " + user);
 		if (jwtTokenUtil.canTokenBeRefreshed(token)) {
 			String refreshedToken = jwtTokenUtil.refreshToken(token);
 			return ResponseEntity.ok(new JwtTokenResponse(refreshedToken));
@@ -71,6 +76,7 @@ public class JwtAuthenticationRestController {
 
 	@ExceptionHandler({ AuthenticationException.class })
 	public ResponseEntity<String> handleAuthenticationException(AuthenticationException e) {
+		log.error("AuthenticationException raised");
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(e.getMessage());
 	}
 

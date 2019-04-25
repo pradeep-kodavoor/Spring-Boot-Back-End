@@ -1,5 +1,6 @@
 package com.practice.rest.webservices.SpringBootBackEnd.helloworld;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,7 @@ public class HelloWorldController {
 	}
 
 	@GetMapping("/hello-world")
+	@PreAuthorize("#username == authentication.principal.username")
 	public String helloWorld() {
 		return "Hello World!";
 	}

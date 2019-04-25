@@ -40,7 +40,11 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 			throws ServletException, IOException {
 		logger.debug("Authentication Request For '{}'", request.getRequestURL());
 
+		logger.info("**********Authentication Filter*********");
+
 		final String requestTokenHeader = request.getHeader(this.tokenHeader);
+
+		logger.info("**********Token*********" + requestTokenHeader);
 
 		String username = null;
 		String jwtToken = null;
@@ -57,11 +61,15 @@ public class JwtTokenAuthorizationOncePerRequestFilter extends OncePerRequestFil
 			logger.warn("JWT_TOKEN_DOES_NOT_START_WITH_BEARER_STRING");
 		}
 
+		logger.info("**********username*********" + username);
+		logger.info("**********SecurityContextHolder.getContext().getAuthentication()*********"
+				+ SecurityContextHolder.getContext().getAuthentication());
+
 		logger.debug("JWT_TOKEN_USERNAME_VALUE '{}'", username);
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
 			UserDetails userDetails = this.jwtInMemoryUserDetailsService.loadUserByUsername(username);
-
+			logger.info("**********userDetails*********" + userDetails);
 			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
